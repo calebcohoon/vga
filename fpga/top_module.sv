@@ -51,10 +51,8 @@ module top_module(
     wire [7:0] logical_y;   // 0-199
     wire in_display_area;
     
-    // Instantiate the pixel doubling module
-    pixel_doubling pd_inst (
-        .clk_25mhz(clk_25mhz),
-        .reset(reset),
+    // Instantiate the pixel mapping module
+    pixel_mapping pm_inst (
         .h_count(h_count),
         .v_count(v_count),
         .display_enable(display_enable),
