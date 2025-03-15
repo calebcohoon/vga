@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module clock_generator(
+module clock_generator (
     input wire clk_in,      // Input clock (100 MHz)
     input wire reset,       // Active high reset
     output wire clk_out,    // Output clock (25 MHz)

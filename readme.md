@@ -27,15 +27,11 @@ Creating a minimalist Mode 13h-inspired graphics system using an Arty A7 FPGA wi
 - [X] Test VGA output with static test pattern
 
 ### Phase 2: Framebuffer Implementation
-- [ ] Design block RAM-based framebuffer (64KB for 320×200×8-bit)
-- [ ] Implement address translation from VGA counters to framebuffer coordinates
-  - [ ] h_addr = h_count >> 1 (divide by 2)
-  - [ ] v_addr = v_count >> 1 (divide by 2)
-  - [ ] fb_addr = (v_addr * 320) + h_addr
-- [ ] Implement 256-entry color palette (3x8-bit RGB values)
-- [ ] Set up default VGA-compatible palette
-- [ ] Connect framebuffer output through palette to VGA RGB signals
-- [ ] Test framebuffer with static test pattern
+- [X] Design block RAM-based framebuffer (64KB for 320×200×8-bit)
+- [X] Implement 256-entry color palette (3x8-bit RGB values)
+- [X] Set up default VGA-compatible palette
+- [X] Connect framebuffer output through palette to VGA RGB signals
+- [X] Test framebuffer with static test pattern
 
 ### Phase 3: USB-UART Communication
 - [ ] Set up USB-UART interface using Arty's built-in bridge

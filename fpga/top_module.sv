@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module top_module(
+module top_module (
     input wire clk_100mhz,      // 100 MHz system clock from Arty
     input wire reset_n,         // Active low reset from Arty button
     
@@ -60,14 +60,47 @@ module top_module(
         .logical_y(logical_y),
         .in_display_area(in_display_area)
     );
+
+    // Framebuffer signals
+    wire [7:0] pixel_color_index;
+
+    // Instantiate the framebuffer
+    framebuffer fb_inst (
+        .clk(clk_25mhz),
+        .reset(reset),
+        .read_x(logical_x),
+        .read_y(logical_y),
+        .pixel_data(pixel_color_index),
+        .write_enable(1'b0),    // Hardwired to 0 for now
+        .write_x(9'd0),         // Not used yet
+        .write_y(8'd0),         // Not used yet
+        .write_data(8'd0)       // Not used yet
+    );
     
-    // Test pattern generation
-    wire [7:0] pattern_x = logical_x[7:0]; // Use lower 8 bits of logical x
+    // Color palette signals
+    wire [3:0] palette_r;
+    wire [3:0] palette_g;
+    wire [3:0] palette_b;
+
+    // Instantiate the color palette
+    color_palette palette_inst (
+        .clk(clk_25mhz),
+        .reset(reset),
+        .color_index(pixel_color_index),
+        .red(palette_r),
+        .green(palette_g),
+        .blue(palette_b),
+        .write_enable(1'b0),    // Hardwired to 0 for now
+        .write_index(8'd0),     // Not used yet
+        .write_r(4'd0),         // Not used yet
+        .write_g(4'd0),         // Not used yet
+        .write_b(4'd0)          // Not used yet
+    );
     
-     // Color generation based on pattern
-    assign vga_r = in_display_area ? (pattern_x[7:6] == 2'd0 || pattern_x[7:6] == 2'd3 ? 4'hF : 4'h0) : 4'h0;
-    assign vga_g = in_display_area ? (pattern_x[7:6] == 2'd1 || pattern_x[7:6] == 2'd3 ? 4'hF : 4'h0) : 4'h0;
-    assign vga_b = in_display_area ? (pattern_x[7:6] == 2'd2 || pattern_x[7:6] == 2'd3 ? 4'hF : 4'h0) : 4'h0;
+    // Connect color output
+    assign vga_r = in_display_area ? palette_r : 4'h0;
+    assign vga_g = in_display_area ? palette_g : 4'h0;
+    assign vga_b = in_display_area ? palette_b : 4'h0;
     
     // Debug LEDs
     assign led[0] = clk_locked;

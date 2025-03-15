@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module vga_controller(
+module vga_controller (
     input wire clk_25mhz,       // 25 MHz clock
     input wire reset,           // Active high reset
     output wire hsync,          // Horizontal sync
