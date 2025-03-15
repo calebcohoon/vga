@@ -20,9 +20,9 @@ Creating a minimalist Mode 13h-inspired graphics system using an Arty A7 FPGA wi
   - [X] Generate horizontal sync (hsync) signal
   - [X] Generate vertical sync (vsync) signal
   - [X] Create horizontal and vertical counters
-- [ ] Implement pixel doubling logic:
-  - [ ] Map each logical 320×200 pixel to 2×2 physical pixels
-  - [ ] Center the 640×400 image in the 640×480 frame
+- [X] Implement pixel mapping logic:
+  - [X] Map each logical 320×200 pixel to physical pixels
+  - [X] Center the image in the 640×480 frame
 - [X] Connect VGA PMOD pins correctly
 - [X] Test VGA output with static test pattern
 
