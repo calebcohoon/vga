@@ -14,17 +14,17 @@ Creating a minimalist Mode 13h-inspired graphics system using an Arty A7 FPGA wi
 ## Development Checklist
 
 ### Phase 1: VGA Controller with Pixel Doubling
-- [ ] Set up Vivado project for Arty A7
-- [ ] Configure 25 MHz clock for entire design
-- [ ] Implement VGA timing controller for 640×480@60Hz
-  - [ ] Generate horizontal sync (hsync) signal
-  - [ ] Generate vertical sync (vsync) signal
-  - [ ] Create horizontal and vertical counters
+- [X] Set up Vivado project for Arty A7
+- [X] Configure 25 MHz clock for entire design
+- [X] Implement VGA timing controller for 640×480@60Hz
+  - [X] Generate horizontal sync (hsync) signal
+  - [X] Generate vertical sync (vsync) signal
+  - [X] Create horizontal and vertical counters
 - [ ] Implement pixel doubling logic:
   - [ ] Map each logical 320×200 pixel to 2×2 physical pixels
   - [ ] Center the 640×400 image in the 640×480 frame
-- [ ] Connect VGA PMOD pins correctly
-- [ ] Test VGA output with static test pattern
+- [X] Connect VGA PMOD pins correctly
+- [X] Test VGA output with static test pattern
 
 ### Phase 2: Framebuffer Implementation
 - [ ] Design block RAM-based framebuffer (64KB for 320×200×8-bit)
