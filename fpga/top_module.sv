@@ -75,29 +75,6 @@ module top_module (
         .rx_data_valid(uart_data_valid)
     );
 
-    // FIFO signals
-    wire [7:0] fifo_data_out;
-    wire fifo_empty;
-    wire fifo_full;
-    wire fifo_read;
-
-    // Instantiate the UART FIFO
-    uart_fifo #(
-        .DEPTH(32),
-        .WIDTH(8)
-    ) uart_fifo_inst (
-        .clk(clk_25mhz),
-        .reset(reset),
-        // Input interface from UART
-        .data_in(uart_data),
-        .write_en(uart_data_valid),
-        .full(fifo_full),
-        // Output interface to command parser
-        .data_out(fifo_data_out),
-        .read_en(fifo_read),
-        .empty(fifo_empty)
-    );
-
     // Command parser signals
     wire fb_write_enable;
     wire [8:0] fb_write_x;
@@ -109,18 +86,13 @@ module top_module (
     wire [3:0] palette_r;
     wire [3:0] palette_g;
     wire [3:0] palette_b;
-    wire parser_ready;
-
-    // Generate read signal for FIFO
-    assign fifo_read = ~fifo_empty && parser_ready;
 
     // Instantiate the command parser
     command_parser cmd_parser (
         .clk(clk_25mhz),
         .reset(reset),
-        .uart_data(fifo_data_out),
-        .uart_data_valid(fifo_read),
-        .parser_ready(parser_ready),
+        .uart_data(uart_data),
+        .uart_data_valid(uart_data_valid),
         .fb_write_enable(fb_write_enable),
         .fb_write_x(fb_write_x),
         .fb_write_y(fb_write_y),
@@ -175,8 +147,8 @@ module top_module (
     
     // Debug LEDs
     assign led[0] = clk_locked;
-    assign led[1] = ~fifo_empty;
-    assign led[2] = fifo_full;
+    assign led[1] = vga_hsync;
+    assign led[2] = vga_vsync;
     assign led[3] = uart_data_valid;
     
 endmodule
