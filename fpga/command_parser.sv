@@ -7,6 +7,7 @@ module command_parser (
     // UART Interface
     input wire [7:0] uart_data,         // Data from UART
     input wire uart_data_valid,         // Valid signal from UART
+    output reg parser_ready,             // Ready signal to indicate parser can accept new data
 
     // Framebuffer Interface
     output reg fb_write_enable,         // Write enable for framebuffer
@@ -68,10 +69,16 @@ module command_parser (
             palette_r <= 0;
             palette_g <= 0;
             palette_b <= 0;
+
+            parser_ready <= 1;
         end else begin
             // Default values for enables
             fb_write_enable <= 0;
             palette_write_enable <= 0;
+
+            // Default value for parser_ready
+            // The parser is ready to accept new data when in WAIT_CMD state
+            parser_ready <= (state == WAIT_CMD);
 
             // Process UART data when valid
             if (uart_data_valid) begin
